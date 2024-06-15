@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alwaysDrawnWithCache="true"
+        android:animateLayoutChanges="true"
+        tools:context=".MainActivity"
+        android:elevation="20dp">
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editTextTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginVertical="24dp"
+                        android:autofillHints=""
+                        android:backgroundTint="@color/white"
+                        android:hint="What are you working on?"
+                        android:textSize="30sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintBottom_toTopOf="@id/est_pomodoros_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/est_pomodoros_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="24dp"
+                        android:gravity="start"
+                        android:text="Est Pomodoros"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField"
+                        style="?attr/textInputFilledStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:alpha="0.6"
+                        android:gravity="start"
+                        android:inputType="number"
+                        android:textStyle="bold"
+                        app:boxBackgroundColor="@color/shrine_pink_100"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="6dp"
+                        app:boxCornerRadiusBottomStart="6dp"
+                        app:boxCornerRadiusTopEnd="6dp"
+                        app:boxCornerRadiusTopStart="6dp"
+                        app:boxStrokeWidth="0dp"
+                        app:layout_constraintStart_toStartOf="@id/est_pomodoros_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/est_pomodoros_tv">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:hint="1"
+                            android:inputType="number"
+                            android:selectAllOnFocus="false"
+                            android:singleLine="false"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/pomodoro_amount_up_button"
+                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="@color/shrine_pink_900"
+                        android:paddingLeft="6dp"
+                        android:paddingTop="6dp"
+                        android:paddingRight="6dp"
+                        android:paddingBottom="6dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="6dp"
+                        android:layout_marginTop="16dp"
+                        app:icon="@drawable/baseline_arrow_drop_up_24"
+                        app:iconSize="32dp"
+
+                        app:layout_constraintStart_toEndOf="@+id/filledTextField"
+                        app:layout_constraintTop_toBottomOf="@+id/est_pomodoros_tv" />
+
+                    <Button
+                        android:id="@+id/pomodoro_amount_down_button"
+                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/shrine_pink_900"
+                        android:paddingLeft="6dp"
+                        android:paddingTop="6dp"
+                        android:layout_marginTop="16dp"
+                        android:paddingRight="6dp"
+                        android:paddingBottom="6dp"
+                        app:cornerRadius="6dp"
+                        app:icon="@drawable/baseline_arrow_drop_down_24"
+                        app:iconSize="32dp"
+
+                        app:layout_constraintStart_toEndOf="@+id/pomodoro_amount_up_button"
+                        app:layout_constraintTop_toBottomOf="@+id/est_pomodoros_tv" />
+
+                    <EditText
+                        android:id="@+id/editTextDescription"
+                        style="@style/Widget.Material3.AutoCompleteTextView.FilledBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#D1D0CF"
+                        android:gravity="top"
+                        android:hint="Some notes..."
+                        android:outlineProvider="bounds"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:circularflow_radiusInDP="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/est_pomodoros_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextTitle"
+                        tools:layout_editor_absoluteX="24dp" />
+
+                    <Button
+                        android:id="@+id/save_button"
+                        style="@style/Widget.Material3.Button.ElevatedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="12dp"
+                        android:backgroundTint="@color/pomodoro_amount_textview"
+                        android:text="Save"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/cancel_button" />
+
+                    <Button
+                        android:id="@+id/cancel_button"
+                        style="@android:style/Widget.Material.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="12dp"
+                        android:alpha="0.6"
+                        android:text="Cancel"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        app:cornerRadius="6dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/save_button"
+                        />
+
+                    <Button
+                        android:id="@+id/button3"
+                        style="@android:style/Widget.Material.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginEnd="20dp"
+                        android:alpha="0.6"
+                        android:text="Add Note"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/cancel_button"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
