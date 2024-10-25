@@ -2,6 +2,7 @@ package com.example.pomodoroapp
 
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -49,12 +50,12 @@ class MainActivity : AppCompatActivity(), PomodoroListAdapter.PomodorosClickList
     lateinit var selectedPomodoro: LocalPomodoroItem
     private lateinit var old_pomodoro: LocalPomodoroItem
 
-    private var timeSelected: Int = 25
+    private var timeSelected: Int = 1 * 60
     private var timeCountDown: CountDownTimer? = null
     private var timeProgress = 0
     private var pauseOffset: Long = 0
     private var isStart = true
-
+    private var isPomodoro = true
 
     var isUpdate = false
 
@@ -107,14 +108,6 @@ class MainActivity : AppCompatActivity(), PomodoroListAdapter.PomodorosClickList
         }
 
         binding.addTaskButton.setOnClickListener {
-//            if (binding.addtaskCv.visibility == View.VISIBLE) {
-//                TransitionManager.beginDelayedTransition(binding.addtaskCv, AutoTransition())
-//                binding.addtaskCv.visibility = View.GONE
-//            } else {
-//                TransitionManager.beginDelayedTransition(binding.addtaskCv, AutoTransition())
-//                binding.addtaskCv.visibility = View.VISIBLE
-//                binding.addTaskButton.visibility = View.GONE
-//            }
             val intent = Intent(this, AddTask::class.java)
             getContent.launch(intent)
         }
@@ -122,86 +115,31 @@ class MainActivity : AppCompatActivity(), PomodoroListAdapter.PomodorosClickList
             startTimeSetup()
         }
 
+        //Add listeners for Pomodoro, Short Break and Long Break buttons
+        binding.pomodoroBtn.setOnClickListener {
+            setTime(25,true)
+        }
+        binding.shortbreakBtn.setOnClickListener {
+            setTime(5,false)
+        }
+        binding.longbreakBtn.setOnClickListener {
+            setTime(15,false)
+        }
+    }
 
-//        binding.cancelMainButton.setOnClickListener {
-//            if (binding.addtaskCv.visibility == View.VISIBLE) {
-//                TransitionManager.beginDelayedTransition(binding.addtaskCv, AutoTransition())
-//                binding.addtaskCv.visibility = View.GONE
-//                binding.addTaskButton.visibility = View.VISIBLE
-//            }
-//        }
-//        binding.addtaskCv.setOnClickListener {
-//            if (binding.addtaskCv.visibility == View.VISIBLE) {
-//                TransitionManager.beginDelayedTransition(binding.addtaskCv, AutoTransition())
-//                binding.addtaskCv.visibility = View.GONE
-//                binding.addTaskButton.visibility = View.VISIBLE
-//            }
-//        }
-//        binding.saveMainButton.setOnClickListener {
-//            val title = binding.editMainTitle.text.toString()
-//            val description = binding.editMainDescription.text.toString()
-//
-//            val formatter = SimpleDateFormat("EEE, d MMM yyyy HH:mm a", Locale.getDefault())
-//            if (isUpdate) {
-//                selectedPomodoro = LocalPomodoroItem(
-//                    title, description, 1, true, formatter.format(Date()), old_pomodoro.id
-//                )
-//            } else {
-//                selectedPomodoro = LocalPomodoroItem(
-//                    title, description, 1, true, formatter.format(Date()), null
-//                )
-//            }
-//            viewModel.addPomodoroItem(selectedPomodoro)
-//        }
+    private fun setTime(minutes:Int, isPomodoro: Boolean){
+        timeSelected = minutes * 60
+        this.isPomodoro = isPomodoro
+        binding.timerTextView.text = String.format("%02d:00", minutes)
+        resetTime(timeSelected)
+        if (isPomodoro) {
+            binding.timerLinearLayout.setBackgroundResource(R.color.cardview_red)
+        } else {
+            binding.timerLinearLayout.setBackgroundResource(R.color.cardview_yellow)
+        }
     }
 
     override fun onItemClicked(pomodoro: LocalPomodoroItem) {
-
-//        val title = binding.editMainTitle.text.toString()
-//        val description = binding.editMainDescription.text.toString()
-//        val formatter = SimpleDateFormat("EEE, d MMM yyyy HH:mm a", Locale.getDefault())
-//
-//        if (binding.addtaskCv.visibility == View.VISIBLE) {
-//            TransitionManager.beginDelayedTransition(binding.addtaskCv, AutoTransition())
-//            binding.addtaskCv.visibility = View.GONE
-//        } else {
-//            TransitionManager.beginDelayedTransition(binding.addtaskCv, AutoTransition())
-//            binding.addtaskCv.visibility = View.VISIBLE
-//            binding.addTaskButton.visibility = View.GONE
-//        }
-//        if (isUpdate) {
-//            selectedPomodoro = LocalPomodoroItem(
-//                title, description, 1, true, formatter.format(Date()), old_pomodoro.id
-//            )
-//            viewModel.updatePomodoro(pomodoro)
-//        } else {
-//            selectedPomodoro = LocalPomodoroItem(
-//                title, description, 1, true, formatter.format(Date()), null
-//            )
-//        }
-//        val data = LocalPomodoroItem(
-//            title = title,
-//            description = description,
-//            1,
-//            true,
-//            formatter.format(Date()),
-//            id = null
-//        )
-//        viewModel.updatePomodoro(selectedPomodoro)
-//
-//        pomodoro?.let {
-//            viewModel.updatePomodoro(
-//                LocalPomodoroItem(
-//                    binding.editMainTitle.text.toString(),
-//                    binding.editMainDescription.text.toString(),
-//                    1,
-//                    true,
-//                    formatter.format(Date()),
-//                    null
-//                )
-//            )
-//        }
-
         val intent = Intent(this@MainActivity, AddTask::class.java)
         intent.putExtra("current_pomodoro", pomodoro)
         updatePomodoro.launch(intent)
@@ -236,16 +174,16 @@ class MainActivity : AppCompatActivity(), PomodoroListAdapter.PomodorosClickList
         }
     }
 
-    private fun resetTime() {
+    private fun resetTime(resetTimeSelected: Int) {
         if (timeCountDown != null) {
             timeCountDown!!.cancel()
             timeProgress = 0
-            timeSelected = 0
+            timeSelected = resetTimeSelected
             pauseOffset = 0
             timeCountDown = null
             binding.startButton.text = "Start"
             isStart = true
-            binding.timerTextView.text = "0"
+            binding.timerTextView.text = String.format("%02d:00", resetTimeSelected / 60)
         }
     }
 
@@ -277,26 +215,38 @@ class MainActivity : AppCompatActivity(), PomodoroListAdapter.PomodorosClickList
             (timeSelected * 1000).toLong() - pauseOffSetL * 1000, 1000
         ) {
             override fun onTick(millisUntilFinished: Long) {
-                timeProgress++
+                val hours: Long = (millisUntilFinished / 1000) / 3600
+                val minutes: Long = ((millisUntilFinished / 1000) % 3600) / 60
+                val seconds: Long = (millisUntilFinished / 1000) % 60
+                val timeFormatted =
+                    String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
                 pauseOffset = timeSelected.toLong() - millisUntilFinished / 1000
-                binding.timerTextView.text = (timeSelected - timeProgress).toString()
+                binding.timerTextView.text = timeFormatted
 
             }
 
             override fun onFinish() {
-                resetTime()
-                Toast.makeText(this@MainActivity, "Times Up!", Toast.LENGTH_SHORT).show()
-
+               if (isPomodoro) {
+                   setTime(5, false)
+                   Toast.makeText(this@MainActivity, "Time for a short break!", Toast.LENGTH_SHORT).show()
+                   val alarm = MediaPlayer.create(this@MainActivity, R.raw.alarm)
+                   alarm.start()
+               } else {
+                   setTime(25,true)
+                   Toast.makeText(this@MainActivity, "Back to work!", Toast.LENGTH_LONG).show()
+                   val alarm = MediaPlayer.create(this@MainActivity, R.raw.alarm)
+                   alarm.start()
+               }
             }
         }.start()
     }
 
-    private fun setTimeFunction() {
-        resetTime()
-        binding.timerTextView.text = "25:00"
-        binding.startButton.text = "Start"
-        timeSelected = "25:00".toInt()
-    }
+//    private fun setTimeFunction() {
+//        resetTime()
+//        binding.timerTextView.text = "25:00"
+//        binding.startButton.text = "Start"
+//        timeSelected = "25:00".toInt()
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

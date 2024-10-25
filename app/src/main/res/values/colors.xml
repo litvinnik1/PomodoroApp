@@ -4,6 +4,7 @@
     <color name="white">#FFFFFF</color>
     <color name="background_red">#D95C5C</color>
     <color name="cardview_red">#DB7777</color>
+    <color name="cardview_yellow">#f87B0D</color>
     <color name="pomodoro_amount_textview">#726E6E</color>
     <color name="pomodoro_amount_edittext">#D1CFCF</color>
     <color name="shrine_pink_100">#FFCBC1</color>

@@ -46,10 +46,12 @@
                         android:layout_marginBottom="8dp"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <Button
+                            android:id="@+id/pomodoro_btn"
                             android:layout_width="0dp"
+                            android:backgroundTint="@color/background_red"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="12dp"
                             android:layout_marginEnd="8dp"
                             android:layout_weight="1"
                             android:gravity="center"
@@ -57,23 +59,27 @@
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
-                        <TextView
+                        <Button
+                            android:id="@+id/shortbreak_btn"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="12dp"
                             android:layout_marginEnd="8dp"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:backgroundTint="@color/background_red"
                             android:text="Short Break"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
-                        <TextView
+                        <Button
+                            android:id="@+id/longbreak_btn"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="12dp"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:backgroundTint="@color/background_red"
                             android:text="Long Break"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
